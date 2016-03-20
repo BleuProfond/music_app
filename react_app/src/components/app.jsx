@@ -1,4 +1,5 @@
 import React from 'react';
+import GridCountainer from './sequencer.jsx';
 
 class App extends React.Component {
 
@@ -19,6 +20,7 @@ class App extends React.Component {
       <div>
         <h2>Count: { this.state.counter }</h2>
         <button onClick={ this.buttonClicked }>Click me!!</button>
+        <GridCountainer></GridCountainer>
       </div>
     )
   }
