@@ -1,0 +1,46 @@
+body {
+  background-color: rgb(36, 31, 27);
+}
+
+.nav {
+  position: relative;
+  background-color: rgb(106, 93, 77);
+  height: 50px;
+  border-radius: 10px;
+  color: white;
+}
+
+.nav > h3 {
+  margin: 0;
+}
+
+.grid {
+  background: rgb(61, 61, 59);
+  float: left;
+  border-radius: 2%;
+}
+
+.row {
+  float: left;
+  position: relative;
+}
+
+.dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 30%;
+  float: left;
+  background: grey;
+}
+
+/*.active div {
+  width: 30px;
+  height: 30px;
+  border-radius: 30%;
+  float: left;
+  margin: 2px;
+  background: red;
+}*/
+
+
+
