@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar/navbar.jsx';
-import Grid from './Sequencer/grid.jsx';
+import Sequencer from './Sequencer/sequencer.jsx';
 import SettingsPanel from './SettingsPanel/settings_panel.jsx';
 import NewPanel from './NewPanel/new_panel.jsx'
 
@@ -15,7 +15,7 @@ class App extends React.Component {
     return(
       <div>
         <Navbar />
-        <Grid />
+        <Sequencer />
         <NewPanel />
         <SettingsPanel />
       </div>

@@ -2,9 +2,12 @@ body {
   background-color: rgb(36, 31, 27);
 }
 
+input {
+  text-align: center;
+}
+/*NAVBAR*/
 .nav {
   position: relative;
-/*  background-color: rgb(85, 90, 80);*/
   background-color: rgb(100, 93, 77);
   height: 75px;
   color: white;
@@ -14,14 +17,19 @@ body {
   margin: 15px 15px;
   position: absolute;
 }
-
+/*SEQUENCER*/
 .sequencer {
   float: left;
   color: white;
   margin-left: 50px;
 }
 
-.sequencer > h5 {
+.parambar {
+  width: 400px;
+  height: 100px;
+  border-style: double;
+  background-color: white;
+  color: white;
 }
 
 .grid {
@@ -45,12 +53,10 @@ body {
   border-radius: 30%;
   float: left;
   background: grey;
-  box-shadow: 100;
 }
 
 .settings {
   float: right;
-  margin-right: 70px;
 }
 
 .new {
@@ -60,17 +66,18 @@ body {
 }
 
 .instbuttons {
-
+  max-width: 500px;
 }
 
 .instbuttons div {
-  margin: 2px;
+  margin: 10px;
   border-style: double;
   border-radius: 5px;
-  width: 100px;
+  width: 80px;
   text-align: center;
-  background-color: grey;
+  background-color: #212121;
   display: inline-block;
+  font-size: .75em;
 }
 
 #bassbutton {color: #8c9eff;}
@@ -78,12 +85,15 @@ body {
 #kickbutton {color: #ce93d8;}
 #snarebutton {color: #69f0ae;}
 #hatbutton {color: #ffd740;}
+#samplebutton {color: #ffcc80;}
 
+/*SETTINGSPANEL*/
 .settings {
   margin-top: 50px;
-  margin-right: 80px;
+  margin-right: 250px;
   padding: 8px;
   border-style: solid;
+  border-width: 1.75px;
   border-radius: 5px;
   color: white;
 }
@@ -98,7 +108,10 @@ body {
 }
 
 #tempofield {
-  text-align: center;
+  font-family: courier;
+  font-size: 12px;
+  color: black;
+  padding: 0;
 }
 
 .projbuttons {
@@ -116,7 +129,6 @@ body {
 }
 
 .metronome div {
-/*  margin: 2px;*/
   margin: 5px auto;
 }
 
