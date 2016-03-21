@@ -15,8 +15,11 @@ class Grid extends React.Component {
     }
 
     return (
-      <div className="grid">
-        <table>{rows}</table>
+      <div className="sequencer">
+        <h5>Sequencer</h5>
+        <div className="grid">
+          <table>{rows}</table>
+        </div>
       </div>
     )
   }

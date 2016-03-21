@@ -11,12 +11,7 @@ class Navbar extends React.Component {
 
   render() {
     return(<div className="nav">
-        <h3>
-          DEMO
-        </h3>
-        <h3>
-          Meh
-        </h3>
+        <h3>DEMO</h3>    
       </div>   
     )
   }

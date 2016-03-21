@@ -4,14 +4,24 @@ body {
 
 .nav {
   position: relative;
-  background-color: rgb(106, 93, 77);
-  height: 50px;
-  border-radius: 10px;
+/*  background-color: rgb(85, 90, 80);*/
+  background-color: rgb(100, 93, 77);
+  height: 75px;
   color: white;
 }
 
-.nav > h3 {
-  margin: 0;
+.nav h3 {
+  margin: 15px 15px;
+  position: absolute;
+}
+
+.sequencer {
+  float: left;
+  color: white;
+  margin-left: 50px;
+}
+
+.sequencer > h5 {
 }
 
 .grid {
@@ -20,27 +30,116 @@ body {
   border-radius: 2%;
 }
 
+.grid td {
+  padding: 4;
+}
+
 .row {
   float: left;
   position: relative;
 }
 
 .dot {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   border-radius: 30%;
   float: left;
   background: grey;
+  box-shadow: 100;
 }
 
-/*.active div {
-  width: 30px;
-  height: 30px;
-  border-radius: 30%;
-  float: left;
+.settings {
+  float: right;
+  margin-right: 70px;
+}
+
+.new {
+  float: right;
+  margin: 0 70px 0 auto;
+  color: white;
+}
+
+.instbuttons {
+
+}
+
+.instbuttons div {
   margin: 2px;
-  background: red;
-}*/
+  border-style: double;
+  border-radius: 5px;
+  width: 100px;
+  text-align: center;
+  background-color: grey;
+  display: inline-block;
+}
+
+#bassbutton {color: #8c9eff;}
+#leadbutton {color: #80deea;}
+#kickbutton {color: #ce93d8;}
+#snarebutton {color: #69f0ae;}
+#hatbutton {color: #ffd740;}
+
+.settings {
+  margin-top: 50px;
+  margin-right: 80px;
+  padding: 8px;
+  border-style: solid;
+  border-radius: 5px;
+  color: white;
+}
+
+.settings .bottom {
+  margin-top: 20px;
+}
+
+.tempo div {
+  display: inline-block;
+  margin: 5px;
+}
+
+#tempofield {
+  text-align: center;
+}
+
+.projbuttons {
+}
+
+.projbuttons div {
+  color: white;
+  border-style: double;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  background-color: grey;
+  display: inline-block;
+  margin: 2px;
+}
+
+.metronome div {
+/*  margin: 2px;*/
+  margin: 5px auto;
+}
+
+#metbutton {
+  color: white;
+  border-style: double;
+  width: 150px;
+  text-align: center;
+  border-radius: 5px;
+  background-color: grey;
+  margin-top: 20px;
+}
+
+#metclock {
+  color: rgb(61, 61, 59);
+  border-style: solid;
+  width: 125px;
+  height: 125px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: grey;
+}
+
 
 
 
