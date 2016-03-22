@@ -27,19 +27,41 @@ input {
 
 .projcredentials {
   float: right;
+  margin: 0;
+  color: #e0e0e0;
 }
 
-.projcredentials > div {
+.projcredentials div {
   display: inline-block;
 }
 
 .projdrop {
-  margin-right: 50px;
+  margin-right: 200px;
+  margin-top: 10px;
 }
 
-.projbuttons {
-  margin-right: 10px;
+.navbuttons {
+  float: right;
+  text-align: center;
+  border-radius: 5px;
+  border-width: .5px;
+  margin-right: 20px;
 }
+
+.navbuttons div {
+  margin: 20px 10px 0 5px;
+  padding: 5px;
+}
+
+#logbutton {
+  border-style: solid;
+  padding: 2px;
+  width: 150px;
+  background-color: rgb(70, 63, 57);
+  border-radius: 5px;
+  border-width: 1.75px;
+}
+
 
 /*SEQUENCER*/
 .sequencer {
@@ -76,19 +98,68 @@ input {
   float: right;
 }
 
+.parambar {
+  border-style: double;
+  height: 85px;
+  width: 520px;
+  clear: both;
+  border-radius: 5px;
+  border-top-style: none;
+  margin-left: 4px;
+  border-width: 3px;
+  background-color: rgb(60, 53, 37);
+  color: black;
+}
+
+.parambar label {
+  font-size: .85em;
+}
+
+.parambar div {
+  font-size: .85em;
+}
+
+.parambar > div {
+/*  border-style: solid;*/
+}
+
+.parambar .left {
+  float: left;
+  margin-left: 10px;
+  margin-bottom: 50px;
+}
+
+.parambar .left div {
+  display: inline-block;
+}
+
+.parambar .right {
+  margin-top: 20px;
+  float: right;
+  width: 200px;
+  margin-right: 20px;
+  font-size: 1em;
+}
+
+.volslider div {
+/*  display: inline;*/
+}
+
 /*NEWPANEL*/
 .new {
   float: right;
-  margin-right: 20px;
+  margin-right: 50px;
   color: white;
+  max-width: 475px;
 }
 
 .instbuttons {
-  max-width: 500px;
+  margin-top: 20px;
 }
 
 .instbuttons div {
-  margin: 3px 15px 5px 15px;
+  margin: 3px 15px 8px 15px;
+  padding: 5px;
   border-style: double;
   border-radius: 5px;
   width: 80px;
@@ -108,8 +179,8 @@ input {
 
 /*SETTINGSPANEL*/
 .settings {
-  margin-top: 50px;
-  margin-right: 250px;
+  margin-top: 70px;
+  margin-right: 150px;
   padding: 8px;
   border-style: solid;
   border-width: 1.75px;

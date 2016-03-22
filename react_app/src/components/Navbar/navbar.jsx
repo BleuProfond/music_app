@@ -15,10 +15,9 @@ class Navbar extends React.Component {
     return(<div className="nav">
         <h3>DEMO</h3>
         <div className="projcredentials">
-          <ProjectDropMenu />
-          <div className="projbuttons">
-            <h6>Welcome, {this.state.name}</h6>
-            <div>Logout</div>
+          <div className="navbuttons">
+            <div><h6>Welcome, {this.state.name}</h6></div>
+            <div id="logbutton">LOG OUT</div>
           </div>
         </div>
       </div>   

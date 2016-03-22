@@ -1,7 +1,7 @@
 import React from 'react';
-import CharacterMenu from './character_menu.jsx';
-import OctaveMenu from './octave_menu.jsx';
-import VolumeMenu from './volume_menu.jsx'
+import CharacterDropMenu from './character_drop.jsx';
+import OctaveDropMenu from './octave_drop.jsx';
+import VolumeSlider from './volume_slider.jsx';
 
 class ParameterBar extends React.Component {
     constructor(props) {
@@ -9,10 +9,16 @@ class ParameterBar extends React.Component {
         this.displayName = 'ParameterBar';
     }
     render() {
-        return (<div className=".parambar">
-          <CharacterMenu />
-          <VolumeMenu />    
-        </div>)
+        return (<div className="parambar">
+                    <div className="left">
+                        <CharacterDropMenu />
+                        <OctaveDropMenu />
+                    </div>
+                    <div className="right">
+                        <VolumeSlider />  
+                    </div>                           
+                </div>
+        )
     }
 }
 

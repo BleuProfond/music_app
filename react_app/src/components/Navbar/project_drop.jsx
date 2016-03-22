@@ -1,8 +1,6 @@
 import React from 'react';
 import DropDownMenu from 'material-ui/lib/DropDownMenu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
 
 class ProjectDropMenu extends React.Component {
     constructor(props) {

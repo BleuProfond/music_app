@@ -3,6 +3,8 @@ import Navbar from './Navbar/navbar.jsx';
 import Sequencer from './Sequencer/sequencer.jsx';
 import SettingsPanel from './SettingsPanel/settings_panel.jsx';
 import NewPanel from './NewPanel/new_panel.jsx'
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 class App extends React.Component {
   constructor(props){
