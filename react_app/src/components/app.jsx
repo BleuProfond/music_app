@@ -15,9 +15,11 @@ class App extends React.Component {
     return(
       <div>
         <Navbar />
-        <Sequencer />
-        <NewPanel />
-        <SettingsPanel />
+        <div className="below">
+          <Sequencer />
+          <NewPanel />
+          <SettingsPanel />
+        </div>
       </div>
     )
   }
