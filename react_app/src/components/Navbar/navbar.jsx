@@ -14,6 +14,7 @@ class Navbar extends React.Component {
   render() {
     return(<div className="nav">
         <h3>DEMO</h3>
+        <ProjectDropMenu />
         <div className="projcredentials">
           <div className="navbuttons">
             <div><h6>Welcome, {this.state.name}</h6></div>
