@@ -19,8 +19,3 @@ class Row extends React.Component {
 
 export default Row;
 
-// start by 
-// onClick={this.active.bind(this)}
-// a method is a function that is a property of an object.
-
-//

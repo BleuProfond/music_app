@@ -11,7 +11,8 @@ class SettingsPanel extends React.Component {
   }
 
   render() {
-    return(<div className="settings">
+    return(
+    <div className="settings">
       <div className="top">
         <TempoField />
       </div>

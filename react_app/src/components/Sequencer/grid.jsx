@@ -42,9 +42,3 @@ class Grid extends React.Component {
 }
 
 export default Grid;
-
-// add function that can grab the id of a key and 
-    //dynamic class names
-    //changing the state to correspond with the dynamic class name.
-    // react modifying css
-    // keys need to be assinged to each dot as they are created
