@@ -7,7 +7,6 @@ import NewPanel from './NewPanel/new_panel.jsx'
 class App extends React.Component {
   constructor(props){
     super(props);
-
     this.state = {};
   }
 

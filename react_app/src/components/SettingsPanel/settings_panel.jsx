@@ -16,7 +16,7 @@ class SettingsPanel extends React.Component {
         <TempoField />
       </div>
       <div className="middle">
-        <ProjectButtons />
+        <ProjectButtons/>
       </div>
       <div className="bottom">
         <Metronome />

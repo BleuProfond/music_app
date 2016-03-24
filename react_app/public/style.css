@@ -48,6 +48,15 @@ body {
   box-shadow: 100;
 }
 
+.clicked {
+    width: 25px;
+  height: 25px;
+  border-radius: 30%;
+  float: left;
+  background: red;
+  box-shadow: 100;
+}
+
 .settings {
   float: right;
   margin-right: 70px;

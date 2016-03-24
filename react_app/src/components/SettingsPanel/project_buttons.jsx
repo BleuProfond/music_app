@@ -7,7 +7,7 @@ class ProjectButtons extends React.Component {
     }
     render() {
         return(<div className="projbuttons">
-          <div id="playbutton">PLAY</div>
+          <div id="playbutton" onClick={ this.props.loop } >PLAY</div>
           <div id="savebutton">SAVE</div>
         </div>)
     }

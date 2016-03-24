@@ -6,10 +6,12 @@ class Dot extends React.Component {
 
     this.state = {};
   }
-
+ 
   render(){
-    return(<td><div className="dot"></div></td>);
+    return(<td><div className="dot" onClick={ this.props.active } ></div></td>);
   }
 }
 
 export default Dot;
+
+// this.props.key
