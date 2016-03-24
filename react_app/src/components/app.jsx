@@ -1,8 +1,10 @@
 import React from 'react';
 import Navbar from './Navbar/navbar.jsx';
-import Grid from './Sequencer/grid.jsx';
+import Sequencer from './Sequencer/sequencer.jsx';
 import SettingsPanel from './SettingsPanel/settings_panel.jsx';
 import NewPanel from './NewPanel/new_panel.jsx'
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 class App extends React.Component {
   constructor(props){
@@ -14,9 +16,11 @@ class App extends React.Component {
     return(
       <div>
         <Navbar />
-        <Grid />
-        <NewPanel />
-        <SettingsPanel />
+        <div className="below">
+          <Sequencer />
+          <NewPanel />
+          <SettingsPanel />
+        </div>
       </div>
     )
   }

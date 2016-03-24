@@ -2,12 +2,22 @@ body {
   background-color: rgb(36, 31, 27);
 }
 
+input {
+  text-align: center;
+}
+
+.below {
+  margin-top: 10px;
+}
+
+/*NAVBAR*/
 .nav {
   position: relative;
-/*  background-color: rgb(85, 90, 80);*/
   background-color: rgb(100, 93, 77);
   height: 75px;
-  color: white;
+  color: #bdbdbd;
+  border-bottom-style: solid;
+  border-width: 0.75px;
 }
 
 .nav h3 {
@@ -15,19 +25,58 @@ body {
   position: absolute;
 }
 
+.projcredentials {
+  float: right;
+  margin: 0;
+  color: #e0e0e0;
+}
+
+.projcredentials div {
+  display: inline-block;
+}
+
+.projdrop {
+  position: absolute;
+  float: left;
+  margin: 5px 0 0 160px;
+}
+
+.navbuttons {
+  float: right;
+  text-align: center;
+  border-radius: 5px;
+  border-width: .5px;
+  margin-right: 20px;
+}
+
+.navbuttons div {
+  margin: 20px 10px 0 5px;
+  padding: 5px;
+}
+
+#logbutton {
+  padding: 2px;
+  width: 150px;
+  background-color: rgb(70, 63, 57);
+  border-radius: 5px;
+  -moz-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
+  -webkit-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
+  box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
+}
+
+
+/*SEQUENCER*/
 .sequencer {
   float: left;
   color: white;
   margin-left: 50px;
 }
 
-.sequencer > h5 {
-}
-
 .grid {
   background: rgb(61, 61, 59);
   float: left;
   border-radius: 2%;
+  margin-top: 5px;
 }
 
 .grid td {
@@ -45,7 +94,6 @@ body {
   border-radius: 30%;
   float: left;
   background: grey;
-  box-shadow: 100;
 }
 
 .clicked {
@@ -59,27 +107,80 @@ body {
 
 .settings {
   float: right;
-  margin-right: 70px;
 }
 
+.parambar {
+  border-style: double;
+  height: 85px;
+  width: 520px;
+  clear: both;
+  border-radius: 5px;
+  border-top-style: none;
+  margin-left: 4px;
+  border-width: 3px;
+  background-color: rgb(60, 53, 37);
+  color: black;
+}
+
+.parambar label {
+  font-size: .85em;
+}
+
+.parambar div {
+  font-size: .85em;
+}
+
+.parambar > div {
+/*  border-style: solid;*/
+}
+
+.parambar .left {
+  float: left;
+  margin-left: 10px;
+  margin-bottom: 50px;
+}
+
+.parambar .left div {
+  display: inline-block;
+}
+
+.parambar .right {
+  margin-top: 20px;
+  float: right;
+  width: 200px;
+  margin-right: 20px;
+  font-size: 1em;
+}
+
+.volslider div {
+/*  display: inline;*/
+}
+
+/*NEWPANEL*/
 .new {
   float: right;
-  margin: 0 70px 0 auto;
+  margin-right: 50px;
   color: white;
+  max-width: 475px;
 }
 
 .instbuttons {
-
+  margin-top: 20px;
 }
 
 .instbuttons div {
-  margin: 2px;
+  margin: 3px 15px 8px 15px;
+  padding: 5px;
   border-style: double;
   border-radius: 5px;
-  width: 100px;
+  width: 80px;
   text-align: center;
-  background-color: grey;
+  background-color: #212121;
   display: inline-block;
+  font-size: .62em;
+  -moz-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
+  -webkit-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
+  box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
 }
 
 #bassbutton {color: #8c9eff;}
@@ -87,14 +188,20 @@ body {
 #kickbutton {color: #ce93d8;}
 #snarebutton {color: #69f0ae;}
 #hatbutton {color: #ffd740;}
+#samplebutton {color: #ffcc80;}
 
+/*SETTINGSPANEL*/
 .settings {
-  margin-top: 50px;
-  margin-right: 80px;
+  margin-top: 70px;
+  margin-right: 180px;
   padding: 8px;
-  border-style: solid;
+/*  border-style: solid;*/
+  border-width: 1.75px;
   border-radius: 5px;
   color: white;
+  -moz-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(100, 100, 100, .4);
+  -webkit-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(100, 100, 100, .4);
+  box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(100, 100, 100, .4);
 }
 
 .settings .bottom {
@@ -107,7 +214,10 @@ body {
 }
 
 #tempofield {
-  text-align: center;
+  font-family: monospace;
+  font-size: 14px;
+  color: black;
+  padding: 0;
 }
 
 .projbuttons {
@@ -121,11 +231,10 @@ body {
   border-radius: 5px;
   background-color: grey;
   display: inline-block;
-  margin: 2px;
+  margin: 10px;
 }
 
 .metronome div {
-/*  margin: 2px;*/
   margin: 5px auto;
 }
 

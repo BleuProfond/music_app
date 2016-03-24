@@ -12,6 +12,7 @@ class InstrumentButtons extends React.Component {
           <div id="kickbutton">KICK</div>
           <div id="snarebutton">SNARE</div>
           <div id="hatbutton">HAT</div>
+          <div id="samplebutton">SAMPLE</div>
         </div>;
     }
 }
