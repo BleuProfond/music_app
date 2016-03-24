@@ -1,26 +1,26 @@
 import React from 'react';
-import GridCountainer from './sequencer.jsx';
+import Navbar from './Navbar/navbar.jsx';
+import Sequencer from './Sequencer/sequencer.jsx';
+import SettingsPanel from './SettingsPanel/settings_panel.jsx';
+import NewPanel from './NewPanel/new_panel.jsx'
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 class App extends React.Component {
-
-  constructor(props) {
+  constructor(props){
     super(props);
-
-    this.state = {
-      counter: 0
-    }
+    this.state = {};
   }
 
-  buttonClicked = () => {
-    this.setState({ counter: this.state.counter + 1 });
-  };
-  
-  render() {
+  render(){
     return(
       <div>
-        <h2>Count: { this.state.counter }</h2>
-        <button onClick={ this.buttonClicked }>Click me!!</button>
-        <GridCountainer></GridCountainer>
+        <Navbar />
+        <div className="below">
+          <Sequencer />
+          <NewPanel />
+          <SettingsPanel />
+        </div>
       </div>
     )
   }
