@@ -9,6 +9,7 @@ class Grid extends React.Component {
 
   active(e) {
     var btn = e.target;
+    console.log(btn);
     if (btn.style.background != "red") {
       btn.style.background = "red";
     } else {
@@ -16,14 +17,10 @@ class Grid extends React.Component {
     }    
   }
 
-  loop(e) {
-    console.log('click');
-  }
-
   render(){
     var rows = [];
     for(var i = 0; i < 12; i++){
-      rows.push(<Row key= {i} active={this.active} />);
+      rows.push(<Row key= {i} id= {i} active={this.active} />);
     }
 
     return (

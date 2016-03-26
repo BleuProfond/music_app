@@ -12,19 +12,19 @@ class SettingsPanel extends React.Component {
 
   render() {
     return(
-    <div className="settings">
-      <div className="top">
-        <TempoField />
+      <div className="settings">
+        <div className="top">
+          <TempoField />
+        </div>
+        <div className="middle">
+          <ProjectButtons loop={this.props.loop} />
+        </div>
+        <div className="bottom">
+          <Metronome />
+        </div>
       </div>
-      <div className="middle">
-        <ProjectButtons/>
-      </div>
-      <div className="bottom">
-        <Metronome />
-      </div>
-    </div>)
+    )
   }
-
 }
 
 export default SettingsPanel;
