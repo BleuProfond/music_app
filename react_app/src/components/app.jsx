@@ -6,18 +6,16 @@ import NewPanel from './NewPanel/new_panel.jsx'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import ReactDOM from 'react-dom';
 injectTapEventPlugin();
+
 var track = {
   tempo: 80,
   tracks: {
     Kick: [ 
       1, 0, 0, 0, 1, 0, 0, 0,
-      1, 0, 0, 0, 1, 0, 0, 0,
-      1, 0, 0, 0, 1, 0, 0, 0,
       1, 0, 0, 0, 1, 0, 0, 0
     ]
   }
 } 
-
 
 class App extends React.Component {
   constructor(props){
@@ -32,17 +30,7 @@ class App extends React.Component {
     function note2freq(note) {
       return Math.pow(2, (note - 69) / 12) * 440;
     } 
-    // var track = {
-    //   tempo: 80,
-    //     tracks: {
-    //       Kick: [ 
-    //         1, 0, 0, 0, 1, 0, 0, 0,
-    //         1, 0, 0, 0, 1, 0, 0, 0,
-    //         1, 0, 0, 0, 1, 0, 0, 0,
-    //         1, 0, 0, 0, 1, 0, 0, 0
-    //       ]
-    //     }
-    // } 
+
     class Sequencer {
       constructor(ac, track){
         this.ac = ac;
@@ -232,16 +220,20 @@ class App extends React.Component {
       index++;
 
       buttonGrid[index].forEach(function(button){
-        button.style.background="lightgrey";
+        if (button.style.background !== "red") {
+          button.style.background="lightgrey";
+        };
       });
 
       if (index > 0){
         buttonGrid[index-1].forEach(function(button){
-          button.style.background="grey";
+          if (button.style.background !== "red") {
+            button.style.background="grey";
+          };
         });
       };
 
-      ref_int = setTimeout(loopGrid, (60/track.tempo)*1000);
+      ref_int = setTimeout(loopGrid, (60/track.tempo)*250);
     };
 
     loopGrid();  
@@ -274,10 +266,6 @@ class App extends React.Component {
       </div>
     )
   }
-
-  // componentDidMount() {
-  //   var track = "hello";
-  // }
 }
 
 export default App;
