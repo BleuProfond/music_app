@@ -17,7 +17,7 @@ class SettingsPanel extends React.Component {
           <TempoField />
         </div>
         <div className="middle">
-          <ProjectButtons loop={this.props.loop} />
+          <ProjectButtons loop={this.props.loop} sound={this.props.sound} />
         </div>
         <div className="bottom">
           <Metronome />

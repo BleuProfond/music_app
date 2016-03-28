@@ -11,7 +11,7 @@ class Row extends React.Component {
   render(){
     var dots = [];
     for(var i = 0; i < 16; i++){
-      dots.push(<Dot key={i} id={i} active={this.props.active} />);
+      dots.push(<Dot key={i} id={i} rowIndex={this.props.rowIndex} active={ this.props.active }/>);
     }        
     return(<tr>{dots}</tr>)
   }

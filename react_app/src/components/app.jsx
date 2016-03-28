@@ -4,7 +4,20 @@ import Sequencer from './Sequencer/sequencer.jsx';
 import SettingsPanel from './SettingsPanel/settings_panel.jsx';
 import NewPanel from './NewPanel/new_panel.jsx'
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import ReactDOM from 'react-dom';
 injectTapEventPlugin();
+var track = {
+  tempo: 80,
+  tracks: {
+    Kick: [ 
+      1, 0, 0, 0, 1, 0, 0, 0,
+      1, 0, 0, 0, 1, 0, 0, 0,
+      1, 0, 0, 0, 1, 0, 0, 0,
+      1, 0, 0, 0, 1, 0, 0, 0
+    ]
+  }
+} 
+
 
 class App extends React.Component {
   constructor(props){
@@ -12,7 +25,100 @@ class App extends React.Component {
     this.state = {};
   }
 
-  loop(e) {
+  sound(e) {
+
+    var ac;
+    stop = false;
+    function note2freq(note) {
+      return Math.pow(2, (note - 69) / 12) * 440;
+    } 
+    // var track = {
+    //   tempo: 80,
+    //     tracks: {
+    //       Kick: [ 
+    //         1, 0, 0, 0, 1, 0, 0, 0,
+    //         1, 0, 0, 0, 1, 0, 0, 0,
+    //         1, 0, 0, 0, 1, 0, 0, 0,
+    //         1, 0, 0, 0, 1, 0, 0, 0
+    //       ]
+    //     }
+    // } 
+    class Sequencer {
+      constructor(ac, track){
+        this.ac = ac;
+        this.track = track;
+      }
+
+      clock(){
+        var beatLen = 60 / this.track.tempo;
+        return (this.ac.currentTime - this.startTime) / beatLen;  
+      }
+
+      start(){
+        this.startTime = this.ac.currentTime;
+        this.nextScheduling = 0;
+        this.scheduler();  
+      }
+
+      scheduler(){
+        var beatLen = 60 / this.track.tempo;
+        var lookahead = 0.5;
+        if (stop) {
+          return;
+        }
+
+        if (this.clock() + lookahead > this.nextScheduling) {
+          var steps = [];
+          steps.push(this.nextScheduling + beatLen / 4);
+
+          for (var i in this.track.tracks) {
+            for (var j = 0; j < steps.length; j++) {
+              var idx = Math.round(steps[j] / ((beatLen / 4)));
+              var note =
+        this.track.tracks[i][idx % this.track.tracks[i].length];
+              var octave = 1;
+              if (note != 0) {
+                this[i](steps[j], note * octave);
+              }
+            }
+          }
+
+          this.nextScheduling += (60 / this.track.tempo / 4);
+        }
+        setTimeout(this.scheduler.bind(this), 15);
+      }
+
+      Kick(t){
+        var kick = new Kick(this.ac);
+        kick.trigger(t);
+      }
+    }
+    class Kick {
+      constructor(context){
+        this.context = context;
+
+        this.oscillator = this.context.createOscillator();
+        this.oscillatorEnvelope = this.context.createGain();
+        this.oscillator.connect(this.oscillatorEnvelope);
+        this.oscillatorEnvelope.connect(this.context.destination);
+      }
+
+      trigger(time){
+        this.oscillator.frequency.setValueAtTime(120, time);
+        this.oscillatorEnvelope.gain.setValueAtTime(1, time);
+
+        this.oscillator.frequency.exponentialRampToValueAtTime(0.01, time + 0.5);
+        this.oscillatorEnvelope.gain.exponentialRampToValueAtTime(0.01, time + 0.5);
+
+        this.oscillator.start(time);
+        this.oscillator.stop(time + 1);  
+      }
+    }
+
+    ac = new AudioContext();
+    //gets track from react page
+    var s = new Sequencer(ac, track);
+    s.start();   
     var buttons = document.getElementsByClassName("dot");
 
     var colOne = [
@@ -135,10 +241,25 @@ class App extends React.Component {
         });
       };
 
-      ref_int = setTimeout(loopGrid, 300);
+      ref_int = setTimeout(loopGrid, (60/track.tempo)*1000);
     };
 
-    loopGrid();
+    loopGrid();  
+  }
+
+  active(e) {
+    var btn = e.target;
+    var cell = btn.parentNode.cellIndex;
+    var row = btn.parentNode.parentNode.rowIndex;
+   
+    if (btn.style.background != "red") {
+      btn.style.background = "red";
+      track.tracks.Kick[cell] = 1;
+      console.log(track.tracks.Kick);
+    } else {
+      btn.style.background = "grey";
+    }  
+    console.log(cell + "," + row);
   }
 
   render(){
@@ -146,13 +267,17 @@ class App extends React.Component {
       <div>
         <Navbar />
         <div className="below">
-          <Sequencer />
+          <Sequencer active={this.active} />
           <NewPanel />
-          <SettingsPanel loop={this.loop} />
+          <SettingsPanel loop={this.loop} sound={this.sound} />
         </div>
       </div>
     )
   }
+
+  // componentDidMount() {
+  //   var track = "hello";
+  // }
 }
 
 export default App;
