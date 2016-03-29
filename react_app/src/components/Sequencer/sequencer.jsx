@@ -9,9 +9,7 @@ class Sequencer extends React.Component {
     }
     render() {
         return(<div className="sequencer">
-          <h5>Sequencer</h5>
           <Grid active={this.props.active} />
-          <ParameterBar />
         </div>)
     }
 }

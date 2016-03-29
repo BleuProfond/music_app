@@ -29,8 +29,6 @@ var track = {
   }
 }
 
-var playing = false;
-
 var notes = [
   2093.00, 2217.46, 2349.32, 2489.02,
   2637.02, 2793.83, 2959.96, 3135.96,
@@ -41,47 +39,6 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {};
-  }
-
-  active(e) {
-    var btn = e.target;
-    var cell = btn.parentNode.cellIndex;
-    var row = btn.parentNode.parentNode.rowIndex;
-   
-    if (btn.style.background != "red") {
-      btn.style.background = "red";
-      switch(row){
-      case 0:
-        track.tracks.Kick[cell] = 1;
-        break;
-      case 1:
-        track.tracks.Snare[cell] = 1;
-        break;
-      case 2:
-        track.tracks.Hat[cell] = 1;
-        break;
-      default:
-        track.tracks.Lead[cell] = notes[row - 3];
-        break;
-      }
-    } 
-    else {
-      btn.style.background = "grey";
-      switch(row){
-      case 0:
-        track.tracks.Kick[cell] = 0;
-        break;
-      case 1:
-        track.tracks.Snare[cell] = 0;
-        break;
-      case 2:
-        track.tracks.Hat[cell] = 0;
-        break;
-      default:
-        track.tracks.Lead[cell] = 0;
-        break;
-      }
-    }  
   }
 
   sound(e) {
@@ -103,6 +60,7 @@ class App extends React.Component {
       }
 
       start(){
+        if (ac != AudioContext)
         this.startTime = this.ac.currentTime;
         this.nextScheduling = 0;
         this.scheduler();  
@@ -110,7 +68,7 @@ class App extends React.Component {
 
       scheduler(){
         var beatLen = 60 / this.track.tempo;
-        var lookahead = 0.5;
+        var lookahead = 0.1;
         if (stop) {
           return;
         }
@@ -118,7 +76,6 @@ class App extends React.Component {
         if (this.clock() + lookahead > this.nextScheduling) {
           var steps = [];
           steps.push(this.nextScheduling + beatLen / 4);
-
           for (var i in this.track.tracks) {
             for (var j = 0; j < steps.length; j++) {
               var idx = Math.round(steps[j] / ((beatLen / 4)));
@@ -195,7 +152,7 @@ class App extends React.Component {
         this.noiseEnvelope.connect(this.context.destination);
 
         this.oscillator = this.context.createOscillator();
-        this.oscillator.type = 'sawtooth';
+        this.oscillator.type = 'triangle';
 
         this.oscillatorEnvelope = this.context.createGain();
         this.oscillator.connect(this.oscillatorEnvelope);
@@ -299,17 +256,21 @@ class App extends React.Component {
     }
 
     ac = new AudioContext();
-    //gets track from react page
     var s = new Sequencer(ac, track);
-    if (playing === false) {
-      s.start();
-      playing = true;
-    } else {
-      playing = false;
-      clearTimeout(ref_int);
-    }
+ 
+    s.start();
+
+    // var columns = [];
+
+    // for(var j = 0; j < 16; j++){
+    //   var column = [];
+    //   for(var i = 0; i < 12; i++){
+    //     column.push(buttons[i + 16]);
+    //   }
+    // }
 
     var buttons = document.getElementsByClassName("dot");
+
     var colOne = [
       buttons[0], buttons[16], buttons[32], buttons[48],
       buttons[64], buttons[80], buttons[96], buttons[112],
@@ -463,15 +424,61 @@ class App extends React.Component {
 
     setTimeout(loopGrid, 400);  
   }
-  
+
+  active(e) {
+    var btn = e.target;
+    var cell = btn.parentNode.cellIndex;
+    var row = btn.parentNode.parentNode.rowIndex;
+
+    var table_id = btn.parentNode.parentNode.parentNode.parentNode.id;
+
+    if (btn.style.background != "red") {
+      btn.style.background = "red";
+      switch(table_id){
+      case 'kicktable':
+        track.tracks.Kick[cell] = 1;
+        break;
+      case 'snaretable':
+        track.tracks.Snare[cell] = 1;
+        break;
+      case 'hattable':
+        track.tracks.Hat[cell] = 1;
+        break;
+      case 'synthtable':
+        track.tracks.Lead[cell] = notes[row];        
+        break;
+      default:
+        break;
+      }
+    } 
+    else {
+      btn.style.background = "grey";
+      switch(table_id){
+      case 'kicktable':
+        track.tracks.Kick[cell] = 0;
+        break;
+      case 'snaretable':
+        track.tracks.Snare[cell] = 0;
+        break;
+      case 'hattable':
+        track.tracks.Hat[cell] = 0;
+        break;
+      case 'synthtable':
+        track.tracks.Lead[cell] = 0;        
+        break;
+      default:
+        break;
+      }
+    }  
+  }
+
   render(){
     return(
       <div>
         <Navbar />
         <div className="below">
           <Sequencer active={this.active} />
-          <NewPanel />
-          <SettingsPanel loop={this.loop} sound={this.sound} />
+          <SettingsPanel sound={this.sound}/>
         </div>
       </div>
     )
