@@ -89,8 +89,8 @@ input {
 }
 
 .dot {
-  width: 25px;
-  height: 25px;
+  width: 15px;
+  height: 15px;
   border-radius: 30%;
   float: left;
   background: grey;

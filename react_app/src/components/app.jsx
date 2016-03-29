@@ -11,11 +11,27 @@ var track = {
   tempo: 80,
   tracks: {
     Kick: [ 
-      1, 0, 0, 0, 1, 0, 0, 0,
-      1, 0, 0, 0, 1, 0, 0, 0
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0
+    ],
+    Snare: [
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0 
+    ],
+    Hat: [ 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0
+    ],
+    Lead: [ 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0
     ]
   }
-} 
+}
+
+var notes = [2093.00, 2217.46, 2349.32, 2489.02,
+             2637.02, 2793.83, 2959.96, 3135.96,
+             3322.44, 3520.00, 3729.31, 3951.08];
 
 class App extends React.Component {
   constructor(props){
@@ -80,7 +96,28 @@ class App extends React.Component {
         var kick = new Kick(this.ac);
         kick.trigger(t);
       }
+
+      Hat(t){
+        var hat = new Hat(this.ac);
+        hat.trigger(t);
+      }
+
+      Snare(t){
+        var snare = new Snare(this.ac);
+        snare.trigger(t);
+      }
+
+      Bass(t, note){
+        var bass = new Bass(this.ac, 'sawtooth');
+        bass.trigger(t, note)
+      }
+
+      Lead(t, note){
+        var lead = new Lead(this.ac, 'sine');
+        lead.trigger(t, note);
+      }
     }
+
     class Kick {
       constructor(context){
         this.context = context;
@@ -103,12 +140,168 @@ class App extends React.Component {
       }
     }
 
+    class Snare {
+      constructor(context){
+        this.context = context;
+
+        this.noise = this.context.createBufferSource();
+        this.noise.buffer = this.noiseBuffer();
+
+        var filter = this.context.createBiquadFilter();
+        filter.type = 'highpass';
+        filter.frequency.value = 1000;
+        this.noise.connect(filter);
+
+        this.noiseEnvelope = this.context.createGain();
+        filter.connect(this.noiseEnvelope);
+
+        this.noiseEnvelope.connect(this.context.destination);
+
+        this.oscillator = this.context.createOscillator();
+        this.oscillator.type = 'sawtooth';
+
+        this.oscillatorEnvelope = this.context.createGain();
+        this.oscillator.connect(this.oscillatorEnvelope);
+
+        this.oscillatorEnvelope.connect(this.context.destination);
+      }
+
+      noiseBuffer(){
+        var bufferSize = this.context.sampleRate;
+        var buffer = this.context.createBuffer(1, bufferSize, this.context.sampleRate);
+        var output = buffer.getChannelData(0);
+
+        for(var i = 0; i < bufferSize; i++){
+          output[i] = Math.random() * 2 - 1;
+        }
+
+        return buffer;
+      }
+
+      trigger(time){
+        this.noiseEnvelope.gain.setValueAtTime(1, time);
+        this.noiseEnvelope.gain.exponentialRampToValueAtTime(0.01, time + 0.2);
+        this.noise.start(time);
+
+        this.oscillator.frequency.setValueAtTime(100, time);
+        this.oscillatorEnvelope.gain.setValueAtTime(0.7, time);
+        this.oscillatorEnvelope.gain.exponentialRampToValueAtTime(0.01, time + 0.1);
+        this.oscillator.start(time);
+
+        this.oscillator.stop(time + 0.2);
+        this.noise.stop(time + 0.2);  
+      }
+    }
+
+    class Hat {
+      constructor(context){
+        this.context = context;
+
+        this.noise = this.context.createBufferSource();
+        this.noise.buffer = this.noiseBuffer();
+
+        var filter = this.context.createBiquadFilter();
+        filter.type = 'highpass';
+        filter.frequency.value = 5000;
+        this.noise.connect(filter);
+
+        this.noiseEnvelope = this.context.createGain();
+        filter.connect(this.noiseEnvelope);
+
+        this.noiseEnvelope.connect(this.context.destination);
+      }
+
+      noiseBuffer(){
+        var bufferSize = this.context.sampleRate;
+        var buffer = this.context.createBuffer(1, bufferSize, this.context.sampleRate);
+        var output = buffer.getChannelData(0);
+
+        for(var i = 0; i < bufferSize; i++){
+          output[i] = Math.random() * 2 - 1;
+        }
+
+        return buffer;
+      }
+
+      trigger(time){
+        this.noiseEnvelope.gain.setValueAtTime(1, time);
+        this.noiseEnvelope.gain.setTargetAtTime(0, time, 0.02);
+        
+        this.noise.start(time); 
+        this.noise.stop(time + 0.2);
+      }
+    }
+
+    class Bass {
+      constructor(context, type){
+        this.context = context;
+
+        this.oscillator1 = this.context.createOscillator();
+        this.oscillator2 = this.context.createOscillator();
+        this.oscillator1.type = this.oscillator2.type = type;
+
+        var filter = this.context.createBiquadFilter();
+        filter.type = 'lowpass';
+        this.oscillator1.connect(filter);
+        this.oscillator2.connect(filter);
+        this.oscillator2.detune.value = 20;
+
+        this.oscillatorEnvelope = this.context.createGain();
+        this.oscillator1.connect(this.oscillatorEnvelope);
+
+        this.oscillatorEnvelope.connect(this.context.destination);
+      }
+
+      trigger(time, note){
+        this.oscillator1.frequency.setValueAtTime(note2freq(note), time);
+        this.oscillator2.frequency.setValueAtTime(note2freq(note), time)
+
+        this.oscillatorEnvelope.gain.setValueAtTime(0.3, time);
+        this.oscillatorEnvelope.gain.setTargetAtTime(0.0, time, 0.1);
+
+        this.oscillator1.start(time);
+        this.oscillator2.start(time);
+        this.oscillator1.stop(time + 1);
+        this.oscillator2.stop(time + 1);
+      }
+    }
+
+    class Lead {
+      constructor(context, type){
+        this.context = context;
+
+        this.oscillator = this.context.createOscillator();
+        this.oscillator.type = type;
+
+        var filter = this.context.createBiquadFilter();
+        filter.type = 'highpass';
+        filter.frequency.value = 200;
+        this.oscillator.connect(filter);
+
+        this.oscillatorEnvelope = this.context.createGain();
+        this.oscillator.connect(this.oscillatorEnvelope);
+
+        this.oscillatorEnvelope.connect(this.context.destination);    
+      }
+
+      trigger(time, note){
+        this.oscillator.frequency.setValueAtTime(note/2, time);
+
+        this.oscillatorEnvelope.gain.setValueAtTime(0.2, time);
+        this.oscillatorEnvelope.gain.setTargetAtTime(0.0, time + 0.2, 0.5);
+
+        this.oscillator.start(time);
+        this.oscillator.stop(time + 0.2);
+      }
+    }
+
     ac = new AudioContext();
     //gets track from react page
     var s = new Sequencer(ac, track);
     s.start();   
     var buttons = document.getElementsByClassName("dot");
-
+    
+    
     var colOne = [
       buttons[0], buttons[16], buttons[32], buttons[48],
       buttons[64], buttons[80], buttons[96], buttons[112],
@@ -236,7 +429,7 @@ class App extends React.Component {
       ref_int = setTimeout(loopGrid, (60/track.tempo)*250);
     };
 
-    loopGrid();  
+    setTimeout(loopGrid, 400);  
   }
 
   active(e) {
@@ -246,12 +439,38 @@ class App extends React.Component {
    
     if (btn.style.background != "red") {
       btn.style.background = "red";
-      track.tracks.Kick[cell] = 1;
-      console.log(track.tracks.Kick);
-    } else {
+      switch(row){
+        case 0:
+          track.tracks.Kick[cell] = 1;
+          break;
+        case 1:
+          track.tracks.Snare[cell] = 1;
+          break;
+        case 2:
+          track.tracks.Hat[cell] = 1;
+          break;
+        default:
+          track.tracks.Lead[cell] = notes[row - 3];
+          break;
+      }
+    } 
+    else {
       btn.style.background = "grey";
+      switch(row){
+        case 0:
+          track.tracks.Kick[cell] = 0;
+          break;
+        case 1:
+          track.tracks.Snare[cell] = 0;
+          break;
+        case 2:
+          track.tracks.Hat[cell] = 0;
+          break;
+        default:
+          track.tracks.Lead[cell] = 0;
+          break;
+      }
     }  
-    console.log(cell + "," + row);
   }
 
   render(){
