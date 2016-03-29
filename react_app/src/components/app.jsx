@@ -11,8 +11,8 @@ var track = {
   tempo: 80,
   tracks: {
     Kick: [ 
-      1, 0, 0, 0, 1, 0, 0, 0,
-      1, 0, 0, 0, 1, 0, 0, 0
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0
     ]
   }
 } 
@@ -24,7 +24,6 @@ class App extends React.Component {
   }
 
   sound(e) {
-
     var ac;
     stop = false;
     function note2freq(note) {
@@ -236,7 +235,7 @@ class App extends React.Component {
       ref_int = setTimeout(loopGrid, (60/track.tempo)*250);
     };
 
-    loopGrid();  
+    setTimeout(loopGrid, 400);  
   }
 
   active(e) {
