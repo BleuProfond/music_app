@@ -66,7 +66,7 @@ class App extends React.Component {
 
       scheduler(){
         var beatLen = 60 / this.track.tempo;
-        var lookahead = 0.5;
+        var lookahead = 0.1;
         if (stop) {
           return;
         }
@@ -74,7 +74,6 @@ class App extends React.Component {
         if (this.clock() + lookahead > this.nextScheduling) {
           var steps = [];
           steps.push(this.nextScheduling + beatLen / 4);
-
           for (var i in this.track.tracks) {
             for (var j = 0; j < steps.length; j++) {
               var idx = Math.round(steps[j] / ((beatLen / 4)));
@@ -296,12 +295,22 @@ class App extends React.Component {
     }
 
     ac = new AudioContext();
-    //gets track from react page
     var s = new Sequencer(ac, track);
     s.start();   
     var buttons = document.getElementsByClassName("dot");
+    var columns = [];
+
+    for(var j = 0; j < 16; j++){
+      var column = [];
+      for(var i = 0; i < 12; i++){
+        column.push(buttons[i + 16]);
+      }
+    }
+
     
-    
+
+    console.log(column);
+
     var colOne = [
       buttons[0], buttons[16], buttons[32], buttons[48],
       buttons[64], buttons[80], buttons[96], buttons[112],
@@ -431,26 +440,30 @@ class App extends React.Component {
 
     setTimeout(loopGrid, 400);  
   }
-
+  //ACTUALLY CHANGES THE NOTE IN THE TRACK
   active(e) {
     var btn = e.target;
     var cell = btn.parentNode.cellIndex;
     var row = btn.parentNode.parentNode.rowIndex;
-   
+
+    var table_id = btn.parentNode.parentNode.parentNode.parentNode.id;
+
     if (btn.style.background != "red") {
       btn.style.background = "red";
-      switch(row){
-        case 0:
+      switch(table_id){
+        case 'kicktable':
           track.tracks.Kick[cell] = 1;
           break;
-        case 1:
+        case 'snaretable':
           track.tracks.Snare[cell] = 1;
           break;
-        case 2:
+        case 'hattable':
           track.tracks.Hat[cell] = 1;
           break;
+        case 'synthtable':
+          track.tracks.Lead[cell] = notes[row - 3];        
+          break;
         default:
-          track.tracks.Lead[cell] = notes[row - 3];
           break;
       }
     } 
@@ -479,8 +492,7 @@ class App extends React.Component {
         <Navbar />
         <div className="below">
           <Sequencer active={this.active} />
-          <NewPanel />
-          <SettingsPanel loop={this.loop} sound={this.sound} />
+          <SettingsPanel sound={this.sound}/>
         </div>
       </div>
     )
