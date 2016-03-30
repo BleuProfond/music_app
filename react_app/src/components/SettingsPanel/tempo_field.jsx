@@ -12,7 +12,7 @@ class TempoField extends React.Component {
         <label for="tempofield">TEMPO</label>
       </div>         
       <div>
-        <input id="tempofield" placeholder="120"></input>
+        <input id="tempofield" placeholder="160"></input>
       </div>       
       </div>
     )

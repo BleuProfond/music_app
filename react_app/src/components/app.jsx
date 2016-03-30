@@ -41,15 +41,11 @@ var notes = [
   3322.44, 3520.00, 3729.31, 3951.08
 ];
 
+var ref_int;
+
 class App extends React.Component {
 
   sound(e) {
-    // var ac;
-    // stop = false;
-    // function note2freq(note) {
-    //   return Math.pow(2, (note - 69) / 12) * 440;
-    // } 
-
     class Sequencer {
       constructor(ac, track){
         this.ac = ac;
@@ -236,7 +232,7 @@ class App extends React.Component {
 
         var filter = this.context.createBiquadFilter();
         filter.type = 'highpass';
-        filter.frequency.value = 200;
+        filter.frequency.value = 100;
         this.oscillator.connect(filter);
 
         this.oscillatorEnvelope = this.context.createGain();
@@ -255,20 +251,10 @@ class App extends React.Component {
         this.oscillator.stop(time + 0.2);
       }
     }
-
+ 
     ac = new AudioContext();
     var s = new Sequencer(ac, track);
- 
-    s.start();
-
-    // var columns = [];
-
-    // for(var j = 0; j < 16; j++){
-    //   var column = [];
-    //   for(var i = 0; i < 12; i++){
-    //     column.push(buttons[i + 16]);
-    //   }
-    // }
+    s.start(); 
 
     var buttons = document.getElementsByClassName("dot");
 
@@ -391,7 +377,7 @@ class App extends React.Component {
       colThirteen, colFourteen, colFifteen, colSixteen
     ];
 
-    var ref_int = 0;
+    // var ref_int = 0;
     var index = -1;
     function loopGrid(){
       if (index == 15) { index = -1 };
@@ -423,7 +409,7 @@ class App extends React.Component {
       ref_int = setTimeout(loopGrid, (60/track.tempo)*250);
     };
 
-    setTimeout(loopGrid, 400);  
+    ref_int = setTimeout(loopGrid, 400);  
   }
 
   active(e) {
@@ -473,20 +459,25 @@ class App extends React.Component {
     }  
   }
 
+  stopTrack(e){
+    ac.close();
+    function stopAnime(){
+      window.clearTimeout(ref_int);
+    };
+    stopAnime();
+  }
+
   render(){
     return(
       <div>
         <Navbar />
         <div className="below">
           <Sequencer active={this.active} />
-          <SettingsPanel sound={this.sound}/>
+          <SettingsPanel stopTrack={this.stopTrack} sound={this.sound} />
         </div>
       </div>
     )
   }
-
-  // componentDidMount() {
-  // }
 }
 
 export default App;
