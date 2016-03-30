@@ -29,6 +29,12 @@ var track = {
   }
 }
 
+var ac;
+stop = false;
+function note2freq(note) {
+  return Math.pow(2, (note - 69) / 12) * 440;
+} 
+
 var notes = [
   2093.00, 2217.46, 2349.32, 2489.02,
   2637.02, 2793.83, 2959.96, 3135.96,
@@ -36,17 +42,13 @@ var notes = [
 ];
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {};
-  }
 
   sound(e) {
-    var ac;
-    stop = false;
-    function note2freq(note) {
-      return Math.pow(2, (note - 69) / 12) * 440;
-    } 
+    // var ac;
+    // stop = false;
+    // function note2freq(note) {
+    //   return Math.pow(2, (note - 69) / 12) * 440;
+    // } 
 
     class Sequencer {
       constructor(ac, track){
@@ -59,11 +61,10 @@ class App extends React.Component {
         return (this.ac.currentTime - this.startTime) / beatLen;  
       }
 
-      start(){
-        if (ac != AudioContext)
+      start(){        
         this.startTime = this.ac.currentTime;
         this.nextScheduling = 0;
-        this.scheduler();  
+        this.scheduler(); 
       }
 
       scheduler(){
@@ -89,7 +90,7 @@ class App extends React.Component {
 
           this.nextScheduling += (60 / this.track.tempo / 4);
         }
-        setTimeout(this.scheduler.bind(this), 15);
+        setTimeout(this.scheduler.bind(this), 180);
       }
 
       Kick(t){
