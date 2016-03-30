@@ -465,6 +465,13 @@ class App extends React.Component {
       window.clearTimeout(ref_int);
     };
     stopAnime();
+    var dots = document.getElementsByClassName("dot");
+    var dotArray = Array.prototype.slice.call(dots);
+    dotArray.forEach(function(dot){
+      if (dot.style.background !== "red") {
+        dot.style.background="grey";
+      };
+    });
   }
 
   render(){
